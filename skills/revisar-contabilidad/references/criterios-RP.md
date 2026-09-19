@@ -43,17 +43,42 @@ sigue necesitando su factura** para deducir el IVA. Son dos cosas distintas.
 ## Pendiente de confirmar con el usuario
 
 - [ ] **Actividad exacta** y epígrafe de IAE.
-- [ ] **¿Hay ingresos exentos de IVA?** Determina si procede **prorrata**.
-- [ ] **¿Hay alquiler de local?** ¿Se retiene el 115? ¿Hay certificado de exención?
+- [ ] **¿Los cobros de AXA e Inter Partner Assistance son reparaciones para
+      aseguradoras o mediación de seguros?** Si fueran mediación estarían exentos y
+      habría **prorrata**. Todo apunta a reparación — hay relaciones de pago
+      mensuales de febrero a septiembre de 2026, de 66,55 € a 9.545,52 € — pero
+      **hace falta confirmarlo**. Es la pregunta de mayor impacto de la sociedad.
 - [ ] **¿Existe contrato** que ampare los movimientos con PROIM BALEAR?
 - [ ] **Retribución del administrador:** ¿está prevista en estatutos?
 - [ ] **Límite de la póliza** 3317 (hace falta para la tesorería real).
-- [ ] **¿Se dotan amortizaciones?** ¿Con qué periodicidad?
+- [ ] **Coeficientes de amortización por elemento** — ver el criterio de 19/09/2026.
+- [ ] **Inventario de existencias** a la fecha de corte.
 - [ ] **¿Por qué tres sub-empresas de nóminas?** Puede tener implicación en centros
       de trabajo y en el 111.
+
+## Datos comprobados el 19/09/2026
+
+Sobre el balance de sumas y saldos a 30/06/2026 y los informes de pendientes.
+
+| | |
+|---|---|
+| Ventas (`700`) 01/01–30/06 | 1.304.236,09 € |
+| Compras (`600`) | 614.649,86 € · margen bruto 52,9 % |
+| Gastos de personal (`640`+`642`) | 501.931,79 € · 38,5 % de ventas |
+| Resultado del periodo | **+7.377,56 € · 0,57 % sobre ventas** |
+| Inmovilizado material (`21`) | 395.288,90 € |
+| Amortización acumulada (`28`) | 82.724,73 € |
+| Existencias de apertura (`300`) | 344.583,17 € |
+| `472` IVA soportado | 87.879,43 € |
+| `477` IVA repercutido | 144.137,67 € |
+| `4751` retenciones | 35.438,23 € |
+| Movimientos de banco jul–sep | 1.616 · **0 pendientes de justificante** |
+| No documentables (TPV y VISA de Bankinter) | 127 — cuadran con la cuenta 4577 |
 
 ## Criterios fijados
 
 | Fecha | Situación | Criterio | ¿General? |
 |---|---|---|---|
-| | | | |
+| 19/09/2026 | Se dudó de si se practicaban retenciones de arrendamiento | **Sí se practican.** Están presentados los modelos 111 y 115 del 1T y 2T, y la `4751` tiene movimiento en el ejercicio. No volver a plantearlo sin mirar antes el grupo `47` | Sí |
+| 19/09/2026 | Los «no documentables» se contaban como pendientes | Las remesas de TPV y los recibos de VISA de Bankinter **no cuentan como que falta**: el banco no los emite. Contarlos da una cobertura del 91 % donde la real es del 100 % | Sí |
+| 19/09/2026 | No hay dotación de amortización en 2026 (grupo `68` vacío) | **Pendiente de resolver, no es criterio.** El resultado está sobrevalorado y con 7.377 € de beneficio es probable que la dotación lo ponga en pérdidas | No |

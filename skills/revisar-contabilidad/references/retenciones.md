@@ -7,6 +7,13 @@ Las retenciones son la contingencia que más se pasa por alto, porque no duele h
 que llega el requerimiento: **si no retienes, respondes tú de lo que debiste
 retener**, aunque el perceptor haya declarado su ingreso.
 
+> **Comprobado el 19/09/2026 en las dos sociedades:** están presentados los modelos
+> **111 y 115 del 1T y 2T de 2026**, con justificantes de pago del 20/07/2026
+> (111: 32.584,88 € · 115: 1.760,28 €). RP tiene la `4751` con movimiento en el
+> ejercicio. **Antes de plantear que falta una retención, mira el grupo `47` y busca
+> los modelos:** dar por hecho que no se retiene mirando solo los grupos 6 y 7 lleva
+> a una conclusión falsa.
+
 ## 1. Alquiler de local — modelo 115
 
 **El primero que hay que mirar en estas dos empresas.** El clasificador ya detectó
@@ -27,6 +34,12 @@ Si no se ha retenido y no hay exención: hallazgo **CRÍTICO**, cuantificado com
 `retención no practicada × meses del periodo`, más los ejercicios anteriores que
 sigan abiertos.
 
+> **Caso resuelto de PROIM (19/09/2026).** El local de C/ Fe 15 tiene dos contratos
+> de 425,00 € cada uno. El pago que sale del banco es de **433,50 €**, que es
+> exactamente `425 + 21 % de IVA − 19 % de retención`. **La retención se practica
+> bien.** Es un buen patrón de comprobación: si el importe pagado no coincide ni con
+> el íntegro ni con el íntegro menos la retención, algo falla.
+
 ## 2. Nóminas — modelo 111
 
 Sale del APU que genera `/generar-apu-nominas`: la línea `475100002` con el
@@ -43,6 +56,10 @@ Sale del APU que genera `/generar-apu-nominas`: la línea `475100002` con el
 En RP CHARGER recuerda que el asiento del mes es la **suma de las tres
 sub-empresas** (00094 / 00095 / 00096). Si el 111 se ha presentado con una sola, se
 ha ingresado de menos.
+
+> **Pendiente en PROIM:** no tiene una `4751` separada — las retenciones de IRPF no
+> están en cuenta propia, lo que hace difícil cuadrar el 111 sin ir al detalle del
+> diario. Abrirla es una mejora concreta del plan contable.
 
 ## 3. Profesionales — también modelo 111
 
@@ -81,7 +98,9 @@ Comprueba las dos cosas: que se retiene bien, y que los estatutos lo amparan.
 | 200 | Impuesto de Sociedades | 25 días tras los 6 meses del cierre |
 
 Confirma los plazos exactos del ejercicio en curso en el calendario del
-contribuyente de AEAT antes de ponerlos en un informe: cambian.
+contribuyente de AEAT antes de ponerlos en un informe: cambian. Y recuerda que
+**si se domicilia el pago, el plazo de presentación se adelanta** respecto al de
+presentación sin domiciliar.
 
 ## 6. El modelo 347 y los descuadres
 

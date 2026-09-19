@@ -113,6 +113,12 @@ ejercicio tras ejercicio y crece.
 No lo des por hecho en ninguno de los dos sentidos: **pregúntalo y anota la
 respuesta** en `criterios-<EMPRESA>.md`.
 
+> **Comprobado el 19/09/2026 en RP CHARGER:** los cobros recurrentes de AXA
+> SEGUROS GENERALES e INTER PARTNER ASSISTANCE, con relaciones de pago mensuales,
+> apuntan a **reparaciones hechas para aseguradoras**, no a mediación. Si se
+> confirma, no hay operación exenta y no procede prorrata. Sigue pendiente de que
+> el usuario lo confirme.
+
 ## 5. Bienes de inversión
 
 Compras de inmovilizado por importe igual o superior a **3.005,06 €**: el IVA
@@ -149,3 +155,8 @@ Una diferencia aquí significa que lo declarado y lo contabilizado no son lo mis
 y eso hay que resolverlo antes de cualquier otra cosa. Recuérdalo en el informe:
 las declaraciones se pueden rectificar, y hacerlo voluntariamente antes de que
 Hacienda pregunte cambia mucho la consecuencia.
+
+> **Localizado el 19/09/2026:** están presentados los modelos 303 del 1T y 2T de
+> ambas sociedades, con su justificante de pago (16.244,22 € el 20/07/2026). Lo que
+> **no** se ha hecho todavía es cuadrar sus casillas contra los saldos de las
+> cuentas `477` y `472`. Es el siguiente paso natural de esta revisión.

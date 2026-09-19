@@ -35,6 +35,17 @@ importe acumulado en cada sentido, el neto, y di si hay contrato. Si no lo hay, 
 hallazgo ALTO con una acción clara: formalizar un contrato de cuenta corriente entre
 sociedades con su interés.
 
+> **Localizado el 19/09/2026 en PROIM:** dos movimientos claros contra RP —
+> «Factura Rpcharger SL» de 40.180,00 € el 03/07 y una transferencia de 30.000,00 €
+> el 20/07 — **más 17 traspasos por 281.021,00 €** de los que no se puede
+> determinar desde el extracto si son entre cuentas propias de PROIM o contra RP.
+> Clasificarlos es lo que decide si hay obligación de modelo 232.
+
+**Además, el arrendamiento del local.** Los dos arrendadores de C/ Fe 15 son
+personas ligadas a la sociedad, y uno de ellos cobra también nómina. Es una
+operación vinculada con persona física: exige valoración a mercado, con
+independencia de que la retención del 115 esté bien practicada.
+
 ## 2. Cuenta con socios y administradores (grupo 55)
 
 Un saldo **deudor** con el socio que se mantiene en el tiempo es uno de los focos
@@ -71,11 +82,19 @@ exactamente el caso aquí. **Lo que no pasa por el banco, no entra solo.**
 | **Deterioro de clientes** | Se paga IS por un ingreso que no vas a cobrar | Saldos de clientes vencidos hace más de seis meses |
 | **Facturas emitidas no cobradas** | Si solo entra lo que pasa por banco, puede faltar ingreso | Comparar facturación emitida con abonos |
 | **Facturas recibidas no pagadas** | Falta el gasto y su IVA soportado | Comparar facturas recibidas con cargos |
+| **Obra en curso** (grupo 33) | En actividad que factura por hitos, los meses sin certificación dan pérdidas falsas | Resultado mensual muy irregular con gasto estable |
 
 Las dos últimas son la diferencia entre contabilidad de **caja** y de **devengo**.
 Es también el límite que tiene la app de control documental en su V1, y conviene
 decirlo con las mismas palabras en los dos sitios: **hoy solo se detecta lo que el
 banco ve**.
+
+> **Comprobado el 19/09/2026 en las dos sociedades:** no aparece el grupo `68`
+> (amortización), ni el `61`/`71` (variación de existencias), ni el `33` (obra en
+> curso). Las dos tienen inmovilizado y amortización acumulada de ejercicios
+> anteriores, así que la dotación de 2026 simplemente no se ha hecho. **Los dos
+> resultados están sobrevalorados**, y en RP, con 7.377,56 € de beneficio, el
+> ajuste es mayor que el propio resultado.
 
 ## 5. Pólizas de crédito
 
@@ -91,7 +110,17 @@ CaixaBank 3940, y las que se den de alta). Tres comprobaciones:
 3. **Gastos de formalización.** Se periodifican a lo largo de la vida de la póliza,
    no van íntegros al mes de la firma.
 
-## 6. Repaso de cierre anual
+## 6. Arrendamiento financiero
+
+Un leasing **no va íntegro a gasto**: se activa el bien, se reconoce la deuda, y
+solo los intereses y la amortización van a resultado. Si una cuenta de servicios
+exteriores acumula importes grandes con nombre de «leasing», hay que abrirla y
+separar lo que es mantenimiento de lo que es cuota de arrendamiento financiero.
+
+> **Pendiente en PROIM (19/09/2026):** la cuenta `629` «GASTOS LEASING
+> MANTENIMIENTO» acumula 70.881,33 € a 31/07. Hay que ver cuánto de eso es leasing.
+
+## 7. Repaso de cierre anual
 
 Cuando la revisión sea anual, además de todo lo anterior:
 
@@ -105,4 +134,7 @@ Cuando la revisión sea anual, además de todo lo anterior:
 - operaciones vinculadas documentadas y el 232 si procede;
 - bases imponibles negativas de ejercicios anteriores pendientes de compensar —
   fácil de olvidar y es dinero;
-- deducciones y bonificaciones aplicables a la actividad.
+- deducciones y bonificaciones aplicables a la actividad;
+- **que el asiento de apertura cuadre**: un descuadre ahí contamina todo el
+  ejercicio y es de los errores más difíciles de ver, porque no lo delata ningún
+  asiento posterior.

@@ -47,6 +47,12 @@ Dar un resultado sin ese aviso es peor que no darlo, porque se toman decisiones 
 inflado: faltan amortizaciones, faltan facturas pendientes de pago, y sobran pagos
 que en realidad eran de periodos anteriores.
 
+**Y cuando el resultado es pequeño, el aviso es la noticia.** RP CHARGER cerró el
+primer semestre de 2026 con 7.377,56 € sobre 1.304.236,09 € de ventas: un 0,57 %.
+Con la amortización sin dotar y las existencias sin regularizar, los ajustes
+pendientes son mayores que el resultado. Decir «gana 7.377 €» sería falso; lo
+correcto es decir que **no se sabe todavía si gana o pierde**.
+
 ## 4. Periodo medio de cobro y de pago
 
 ```
@@ -59,7 +65,20 @@ a tus clientes con la póliza, y entonces el problema no es el banco: es la gest
 de cobro. Ese diagnóstico cambia la decisión — no hace falta más financiación, hace
 falta cobrar antes.
 
-## 5. Dos cosas más, cuando haya datos para ellas
+## 5. Cuando el resultado mensual no sirve para dirigir
+
+Hay actividades donde el resultado de un mes no significa nada por sí solo. PROIM
+BALEAR es el ejemplo: en 2026 el gasto mensual es estable (205 k – 436 k) y el
+ingreso oscila entre 247 k y 780 k, con tres meses seguidos en pérdidas y luego
+565.486 € en dos meses.
+
+Eso no es una empresa que vaya mal y luego bien: es **facturación por
+certificaciones sin activar obra en curso**. Antes de interpretar un resultado
+mensual, comprueba si la actividad factura a hitos. Si es así, dilo en el informe y
+recomienda activar el grupo `33` — sin eso, el cuadro de mando mensual transmite
+alarmas y euforias que no existen.
+
+## 6. Dos cosas más, cuando haya datos para ellas
 
 **Concentración de clientes.** Si un solo cliente es más del 30 % de la facturación,
 es un riesgo de negocio que merece salir en el informe aunque no sea contable.
@@ -68,7 +87,7 @@ es un riesgo de negocio que merece salir en el informe aunque no sea contable.
 Es el número que más agradece un CEO, y se puede estimar con los gastos fijos del
 periodo.
 
-## 6. El diagnóstico
+## 7. El diagnóstico
 
 Cierra siempre con tres o cuatro frases en lenguaje normal. Sin ratios, sin jerga.
 El CEO tiene que poder leerlo y saber si dormir tranquilo:
