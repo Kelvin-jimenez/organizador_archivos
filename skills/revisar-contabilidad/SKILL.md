@@ -189,6 +189,16 @@ poder leerla y saber si dormir tranquilo.
 
 ---
 
+## Estándar corporativo
+
+Los informes se presentan con formato de grupo aunque las sociedades sean pymes:
+cabecera con sociedad, periodo, fecha de extracción y referencia
+(`<SOCIEDAD>-REV-<PERIODO>-v<N>`), terminología del Plan General Contable, y cuentas
+siempre con su epígrafe. El criterio completo está en
+`control-contable/references/informe-global.md`. El motivo es sencillo: una revisión
+fiscal acaba en manos del asesor, del banco o de una inspección, y ahí un documento
+sin identificar no vale nada.
+
 ## Estructura del informe
 
 Usa siempre esta estructura. El resumen ejecutivo va primero y se lee solo.
