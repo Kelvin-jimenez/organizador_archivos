@@ -1,0 +1,413 @@
+<title>Panel de Cierre Contable</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<style>
+:root{
+  --ground:#f2f4f7; --surface:#ffffff; --surface-2:#fafbfc;
+  --ink:#141b24; --ink-2:#4a5866; --ink-3:#7a8896;
+  --line:#dce1e8; --line-2:#eceff3;
+  --accent:#27476e; --accent-soft:#e8eef6;
+  --ok:#186a43; --ok-bg:#e6f2ea;
+  --warn:#8f5700; --warn-bg:#fdf0dc;
+  --crit:#9c2018; --crit-bg:#fbe9e7;
+  --none:#66727e; --none-bg:#eef0f2;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#11161c; --surface:#1a212a; --surface-2:#161d25;
+    --ink:#e8edf2; --ink-2:#a9b6c3; --ink-3:#77838f;
+    --line:#2b3540; --line-2:#222b34;
+    --accent:#8fb4e0; --accent-soft:#1e2b3a;
+    --ok:#6fcf9a; --ok-bg:#16301f;
+    --warn:#e8b062; --warn-bg:#32250f;
+    --crit:#f0928a; --crit-bg:#361a18;
+    --none:#8c97a2; --none-bg:#222a32;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#11161c; --surface:#1a212a; --surface-2:#161d25;
+  --ink:#e8edf2; --ink-2:#a9b6c3; --ink-3:#77838f;
+  --line:#2b3540; --line-2:#222b34;
+  --accent:#8fb4e0; --accent-soft:#1e2b3a;
+  --ok:#6fcf9a; --ok-bg:#16301f;
+  --warn:#e8b062; --warn-bg:#32250f;
+  --crit:#f0928a; --crit-bg:#361a18;
+  --none:#8c97a2; --none-bg:#222a32;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  font-size:14px; line-height:1.55; margin:0;
+  padding-inline:16px; padding-block:28px 64px;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,serif;margin:0;text-wrap:balance}
+h1{font-size:30px;font-weight:700;letter-spacing:-.015em;line-height:1.15}
+h2{font-size:19px;font-weight:600;letter-spacing:-.01em}
+h3{font-size:15px;font-weight:600}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.num{font-variant-numeric:tabular-nums}
+.eyebrow{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+
+/* ---------- cabecera ---------- */
+header{border-bottom:2px solid var(--ink);padding-bottom:18px}
+header .meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px;font-size:12.5px;color:var(--ink-2)}
+header .meta b{color:var(--ink);font-weight:600}
+
+/* ---------- corrección ---------- */
+.fix{background:var(--warn-bg);border-left:4px solid var(--warn);padding:16px 18px;border-radius:0 6px 6px 0}
+.fix h3{color:var(--warn);margin-bottom:6px}
+.fix p{margin:0 0 8px}
+.fix p:last-child{margin-bottom:0}
+
+/* ---------- tarjetas sociedad ---------- */
+.societies{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
+.soc{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:20px}
+.soc .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid var(--line-2);padding-bottom:12px;margin-bottom:14px}
+.soc .period{font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+.figure{font-family:"IBM Plex Mono",monospace;font-size:27px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.figure.pos{color:var(--ok)} .figure.neg{color:var(--crit)}
+.figcap{font-size:11.5px;color:var(--ink-3);margin-top:3px}
+.kv{display:grid;grid-template-columns:1fr auto;gap:7px 14px;margin-top:16px;font-size:13px}
+.kv dt{color:var(--ink-2)}
+.kv dd{margin:0;font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ---------- barras mes ---------- */
+.spark{margin-top:16px;padding-top:14px;border-top:1px solid var(--line-2)}
+.bars{display:flex;align-items:flex-end;gap:5px;height:66px;margin-top:9px}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative}
+.bar i{display:block;border-radius:2px 2px 0 0}
+.bar.up i{background:var(--ok)} .bar.down i{background:var(--crit)}
+.bar.hi i{outline:2px solid var(--accent);outline-offset:1px}
+.barlab{display:flex;gap:5px;margin-top:5px;font-size:10px;color:var(--ink-3)}
+.barlab span{flex:1;text-align:center}
+
+/* ---------- ventanas ---------- */
+.windows{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.win{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
+.win>header{display:flex;align-items:center;gap:9px;padding:12px 16px;background:var(--surface-2);border-bottom:1px solid var(--line);border-radius:0}
+.win>header h3{flex:1;font-family:"IBM Plex Sans",sans-serif;font-size:13.5px;font-weight:600}
+.win .body{padding:14px 16px;display:flex;flex-direction:column;gap:11px;flex:1}
+.win .row{display:flex;justify-content:space-between;gap:12px;font-size:13px;align-items:baseline}
+.win .row span:last-child{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+.src{font-size:11.5px;color:var(--ink-3);border-top:1px dashed var(--line);padding-top:9px;margin-top:auto}
+.src b{color:var(--ink-2);font-weight:600;display:block;margin-bottom:2px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+.src code{font-family:"IBM Plex Mono",monospace;font-size:11px;word-break:break-word}
+.gap{font-size:12.5px;padding:9px 11px;border-radius:5px;line-height:1.45}
+.gap.crit{background:var(--crit-bg);color:var(--crit)}
+.gap.warn{background:var(--warn-bg);color:var(--warn)}
+.gap.ok{background:var(--ok-bg);color:var(--ok)}
+.gap b{font-weight:600}
+
+.pill{font-size:10.5px;font-weight:600;padding:2.5px 8px;border-radius:99px;letter-spacing:.03em;white-space:nowrap}
+.p-ok{background:var(--ok-bg);color:var(--ok)}
+.p-warn{background:var(--warn-bg);color:var(--warn)}
+.p-crit{background:var(--crit-bg);color:var(--crit)}
+.p-none{background:var(--none-bg);color:var(--none)}
+
+/* ---------- backlog ---------- */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:13px}
+th{text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600;padding:11px 12px;background:var(--surface-2);border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid var(--line-2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.id{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);white-space:nowrap}
+td.imp{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.stripe{border-left:3px solid transparent}
+.s-crit{border-left-color:var(--crit)} .s-warn{border-left-color:var(--warn)} .s-low{border-left-color:var(--none)}
+
+.note{font-size:12.5px;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.note h3{margin-bottom:8px}
+.note ul{margin:0;padding-left:19px} .note li{margin-bottom:5px}
+.note li:last-child{margin-bottom:0}
+footer{font-size:11.5px;color:var(--ink-3);border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:520px){h1{font-size:24px}.figure{font-size:23px}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Contabilidad Elías · Control de cierre</div>
+  <h1>Panel de cierre 3T 2026</h1>
+  <div class="meta">
+    <span><b>Sociedades</b> RP CHARGER SL · PROIM BALEAR SL</span>
+    <span><b>Extraído</b> 19/09/2026</span>
+    <span><b>Fuente</b> Google Drive, 11.694 apuntes + 6 informes de pendientes + balances</span>
+    <span><b>Ref.</b> <span class="mono">GRUPO-PANEL-2026Q3-v1</span></span>
+  </div>
+</header>
+
+<div class="fix">
+  <h3>Corrección al informe de P&amp;G que te envié antes</h3>
+  <p><b>Sí se practican las retenciones.</b> Dije que no encontraba la cuenta de Hacienda acreedora por retenciones y que el 115 podía no estarse declarando. Estaba mirando solo los grupos 6 y 7. Al abrir el grupo 47 y buscar los modelos aparece lo contrario: RP tiene la <span class="mono">4751</span> con 66.459,88 € abonados en el ejercicio, y están presentados los <b>modelos 111 y 115 del 1T y 2T de las dos sociedades</b>.</p>
+  <p>La prueba definitiva está en el propio pago: el contrato del local de C/ Fe 15 es de <span class="mono num">425,00 €</span>, y lo que sale del banco a cada arrendador son <span class="mono num">433,50 €</span> — exactamente 425 + 21 % de IVA − 19 % de retención. La retención se practica bien.</p>
+</div>
+
+<section class="societies">
+
+  <article class="soc">
+    <div class="top">
+      <h2>RP CHARGER SL</h2>
+      <span class="period">01/01 – 30/06/2026</span>
+    </div>
+    <div class="figure pos num">+7.377,56 €</div>
+    <div class="figcap">Resultado del periodo — <b>0,57 % sobre ventas</b></div>
+    <dl class="kv">
+      <dt>Ventas</dt><dd>1.304.236,09</dd>
+      <dt>Compras</dt><dd>−614.649,86</dd>
+      <dt>Margen bruto</dt><dd>689.991,23 · 52,9 %</dd>
+      <dt>Personal</dt><dd>−501.931,79 · 38,5 %</dd>
+      <dt>Servicios exteriores</dt><dd>−169.723,84</dd>
+      <dt>Tributos y financieros</dt><dd>−10.958,04</dd>
+      <dt>Movimientos de banco 3T</dt><dd>1.616</dd>
+      <dt>Pendientes de justificante</dt><dd>0</dd>
+    </dl>
+  </article>
+
+  <article class="soc">
+    <div class="top">
+      <h2>PROIM BALEAR SL</h2>
+      <span class="period">01/01 – 31/07/2026</span>
+    </div>
+    <div class="figure pos num">+443.152,20 €</div>
+    <div class="figcap">Resultado del periodo — <b>16,5 % sobre ventas</b></div>
+    <dl class="kv">
+      <dt>Ventas</dt><dd>2.673.339,00</dd>
+      <dt>Compras</dt><dd>−1.256.840,32</dd>
+      <dt>Margen bruto</dt><dd>1.416.498,68 · 53,0 %</dd>
+      <dt>Personal</dt><dd>−845.008,37 · 31,6 %</dd>
+      <dt>Servicios exteriores</dt><dd>−132.323,29</dd>
+      <dt>Tributos y financieros</dt><dd>−5.925,32</dd>
+      <dt>Movimientos de banco 3T</dt><dd>655</dd>
+      <dt>Pendientes de justificante</dt><dd>283</dd>
+    </dl>
+    <div class="spark">
+      <div class="eyebrow">Resultado mes a mes · el 78 % del año cae en julio</div>
+      <div class="bars">
+        <div class="bar up"><i style="height:8%"></i></div>
+        <div class="bar up"><i style="height:15%"></i></div>
+        <div class="bar down"><i style="height:18%"></i></div>
+        <div class="bar down"><i style="height:19%"></i></div>
+        <div class="bar down"><i style="height:22%"></i></div>
+        <div class="bar up"><i style="height:64%"></i></div>
+        <div class="bar up hi"><i style="height:100%"></i></div>
+      </div>
+      <div class="barlab"><span>ENE</span><span>FEB</span><span>MAR</span><span>ABR</span><span>MAY</span><span>JUN</span><span>JUL</span></div>
+    </div>
+  </article>
+
+</section>
+
+<section>
+  <div class="eyebrow" style="margin-bottom:12px">Ventanas · cada dato, de dónde sale y qué le falta</div>
+  <div class="windows">
+
+    <article class="win">
+      <header><h3>Circuito bancario</h3><span class="pill p-warn">Parcial</span></header>
+      <div class="body">
+        <div class="row"><span>RP · jul–sep, pendientes</span><span>0 de 1.616</span></div>
+        <div class="row"><span>PROIM · agosto</span><span>0 de 252</span></div>
+        <div class="row"><span>PROIM · julio</span><span>282 de 293</span></div>
+        <div class="row"><span>No documentables (TPV y VISA)</span><span>127</span></div>
+        <div class="gap crit"><b>Julio de PROIM no es un problema documental.</b> Las cuentas 4584 y 5218 figuran con cero papeles cruzados y esas mismas cuentas en agosto están al 98,8 %. El cruce no se ha ejecutado.</div>
+        <div class="src"><b>Origen</b><code>PENDIENTES_{RP,PROIM}_{JULIO,AGOSTO,SEPTIEMBRE}.xlsx</code> · hoja RESUMEN</div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>Extractos incorporados</h3><span class="pill p-crit">Faltan 5</span></header>
+      <div class="body">
+        <div class="row"><span>RP · cuentas con extracto</span><span>5 de 5 · jul·ago·sep</span></div>
+        <div class="row"><span>PROIM · julio</span><span>4 de 5</span></div>
+        <div class="row"><span>PROIM · agosto</span><span>5 de 5</span></div>
+        <div class="row"><span>PROIM · septiembre</span><span>1 de 5</span></div>
+        <div class="gap crit">Falta <b>julio de Sabadell 0595</b> y <b>septiembre de cuatro cuentas de PROIM</b>. Sin extracto no se puede saber qué falta.</div>
+        <div class="src"><b>Origen</b><code>BANCOS/2026/&lt;banco&gt;/&lt;cuenta&gt;/&lt;mes&gt;/EXTRACTO_*.xls</code></div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>Los 283 pendientes, por naturaleza</h3><span class="pill p-warn">Revisar</span></header>
+      <div class="body">
+        <div class="row"><span>Recibos domiciliados</span><span>75 · −128.512,06</span></div>
+        <div class="row"><span>Transferencias</span><span>101 · +824.893,36</span></div>
+        <div class="row"><span>Traspasos propios</span><span>17 · −281.021,00</span></div>
+        <div class="row"><span>Nóminas, impuestos, SS, préstamos</span><span>69</span></div>
+        <div class="gap warn">Solo los <b>75 recibos domiciliados</b> necesitan factura. Lo demás no lleva IVA. Presentarlos como «283 facturas que faltan» sería falso.</div>
+        <div class="src"><b>Origen</b><code>PENDIENTES_PROIM_*.xlsx</code> · hoja FALTAN, clasificada por concepto</div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>IVA y modelos presentados</h3><span class="pill p-ok">Al día</span></header>
+      <div class="body">
+        <div class="row"><span>303 · 1T y 2T</span><span>Las dos sociedades</span></div>
+        <div class="row"><span>111 · 1T y 2T</span><span>Las dos sociedades</span></div>
+        <div class="row"><span>115 · 1T y 2T</span><span>Las dos sociedades</span></div>
+        <div class="row"><span>Pago 303 del 20/07/2026</span><span>16.244,22</span></div>
+        <div class="row"><span>Pago 111 del 20/07/2026</span><span>32.584,88</span></div>
+        <div class="row"><span>Pago 115 del 20/07/2026</span><span>1.760,28</span></div>
+        <div class="gap warn">Están presentados pero <b>no cuadrados contra la contabilidad</b>. Falta contrastar las casillas con los saldos de las cuentas <span class="mono">477</span> y <span class="mono">472</span>.</div>
+        <div class="src"><b>Origen</b><code>{RP,PROIM} MOD {303,111,115} {1ER,2D} TR-2026.pdf</code> y los recibos de pago AEAT</div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>Saldos con Hacienda</h3><span class="pill p-ok">Localizado</span></header>
+      <div class="body">
+        <div class="row"><span>RP · <span class="mono">472</span> IVA soportado</span><span>87.879,43</span></div>
+        <div class="row"><span>RP · <span class="mono">477</span> IVA repercutido</span><span>144.137,67</span></div>
+        <div class="row"><span>RP · <span class="mono">4751</span> retenciones</span><span>35.438,23</span></div>
+        <div class="row"><span>RP · <span class="mono">4752</span> Impuesto Sociedades</span><span>29.868,23</span></div>
+        <div class="row"><span>PROIM · <span class="mono">477</span> repercutido</span><span>124.548,11</span></div>
+        <div class="row"><span>PROIM · <span class="mono">472</span> soportado</span><span>60.260,62</span></div>
+        <div class="gap warn"><b>PROIM no tiene una <span class="mono">4751</span> separada.</b> Las retenciones de IRPF no están en cuenta propia, lo que hace difícil cuadrar el 111 sin ir al detalle.</div>
+        <div class="src"><b>Origen</b><code>BALANCE SUMAS Y SALDOS A 30-06-2026.xls</code> (RP) · <code>DIARIO A 31-07-2026.xls</code> (PROIM)</div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>Inmovilizado y amortización</h3><span class="pill p-crit">Sin dotar</span></header>
+      <div class="body">
+        <div class="row"><span>RP · inmovilizado material</span><span>395.288,90</span></div>
+        <div class="row"><span>RP · amortización acumulada</span><span>82.724,73</span></div>
+        <div class="row"><span>PROIM · inmovilizado material</span><span>386.758,87</span></div>
+        <div class="row"><span>Dotación del ejercicio 2026</span><span>0,00</span></div>
+        <div class="gap crit">El grupo <span class="mono">68</span> no aparece en ninguna de las dos. <b>El resultado de ambas está sobrevalorado.</b> En RP, cuyo resultado son 7.377 €, esto probablemente lo pone en pérdidas.</div>
+        <div class="src"><b>Origen</b>Grupos <span class="mono">21</span>, <span class="mono">28</span> y <span class="mono">68</span> del balance y del diario. Aviso: <code>CUADRO_AMORTIZACION_PRESTAMO_5634.xlsx</code> <b>no</b> sirve aquí — es el cuadro de un préstamo, no de inmovilizado.</div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>Existencias</h3><span class="pill p-crit">Sin regularizar</span></header>
+      <div class="body">
+        <div class="row"><span>RP · saldo de apertura <span class="mono">300</span></span><span>344.583,17</span></div>
+        <div class="row"><span>Variación del ejercicio (<span class="mono">61</span>/<span class="mono">71</span>)</span><span>no existe</span></div>
+        <div class="row"><span>PROIM · obra en curso (<span class="mono">33</span>)</span><span>no existe</span></div>
+        <div class="gap crit">Las compras han ido íntegras a gasto. <b>El efecto puede ser grande en las dos direcciones</b> y no se puede estimar sin el inventario a la fecha.</div>
+        <div class="src"><b>Origen</b>Ausencia de los grupos <span class="mono">61</span>, <span class="mono">71</span> y <span class="mono">33</span> en balance y diario</div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>Integridad del diario</h3><span class="pill p-crit">1 descuadre</span></header>
+      <div class="body">
+        <div class="row"><span>PROIM · asientos</span><span>3.298</span></div>
+        <div class="row"><span>PROIM · apuntes</span><span>11.694</span></div>
+        <div class="row"><span>Asientos descuadrados</span><span>1</span></div>
+        <div class="row"><span>Asiento de apertura · DEBE</span><span>912.077,82</span></div>
+        <div class="row"><span>Asiento de apertura · HABER</span><span>912.198,82</span></div>
+        <div class="gap crit">El <b>asiento de apertura descuadra 121,00 €</b> y arrastra desde el 1 de enero. Los otros 3.297 cuadran al céntimo, así que no es un problema de lectura del fichero.</div>
+        <div class="src"><b>Origen</b><code>DIARIO A 31-07-2026.xls</code> · suma por número de asiento</div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>Resultado contra balance</h3><span class="pill p-warn">102.853,80 €</span></header>
+      <div class="body">
+        <div class="row"><span><span class="mono">129</span> en la apertura</span><span>78.021,36</span></div>
+        <div class="row"><span>Resultado ene–jul según diario</span><span>443.152,20</span></div>
+        <div class="row"><span>Suma</span><span>521.173,56</span></div>
+        <div class="row"><span><span class="mono">129</span> en el balance de 14/08</span><span>624.027,36</span></div>
+        <div class="gap warn">Diferencia de <b>102.853,80 €</b>. Lo más probable es que sean asientos de agosto posteriores al corte del diario, pero <b>no está confirmado</b>.</div>
+        <div class="src"><b>Origen</b><code>PROIM BALANCE SUMAS Y SALDOS A 30-06-2026.xls</code> (en realidad balance de situación) frente al diario</div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>Operaciones vinculadas</h3><span class="pill p-warn">Sin clasificar</span></header>
+      <div class="body">
+        <div class="row"><span>«Factura Rpcharger SL» 03/07</span><span>−40.180,00</span></div>
+        <div class="row"><span>Transferencia a RP 20/07</span><span>−30.000,00</span></div>
+        <div class="row"><span>Traspasos sin identificar</span><span>17 · 281.021,00</span></div>
+        <div class="gap warn">Desde el extracto <b>no se distingue</b> si esos 17 traspasos son entre cuentas de PROIM o contra RP. Unos son tesorería; los otros son vinculadas, con documentación y posible modelo 232.</div>
+        <div class="src"><b>Origen</b>Conceptos «Transf intern» y «rpcharger» en <code>PENDIENTES_PROIM_*.xlsx</code></div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>Arrendamiento del local</h3><span class="pill p-warn">Vinculada</span></header>
+      <div class="body">
+        <div class="row"><span>Renta contratada</span><span>425,00 × 2</span></div>
+        <div class="row"><span>Pagado por banco</span><span>433,50 × 2</span></div>
+        <div class="row"><span>Comprobación</span><span>425 + 21 % − 19 %</span></div>
+        <div class="gap warn">Los dos arrendadores son <b>personas físicas ligadas a la sociedad</b> — uno de ellos cobra también nómina. Es arrendamiento a parte vinculada: exige valoración a mercado, aunque la retención esté bien.</div>
+        <div class="src"><b>Origen</b><code>26-08-2026_CONTRATO_ARRENDAMIENTO_LOCAL_C_FE_15_*.pdf</code> y los pagos del 03/09 en Bankinter 4584</div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>Aseguradoras</h3><span class="pill p-none">Por aclarar</span></header>
+      <div class="body">
+        <div class="row"><span>AXA · transferencias recibidas</span><span>feb – sep 2026</span></div>
+        <div class="row"><span>Rango de importes</span><span>66,55 – 9.545,52</span></div>
+        <div class="row"><span>Inter Partner Assistance</span><span>relaciones de pago</span></div>
+        <div class="gap ok">Estos flujos parecen <b>cobros por reparaciones hechas para aseguradoras</b>, no mediación de seguros. Si es así, <b>no hay prorrata</b> y la contingencia que te señalé no existe. <b>Necesito que me lo confirmes.</b></div>
+        <div class="src"><b>Origen</b><code>BANCOS/2026/6.OTROS DOCUMENTOS/RECIBO_*_AXA_*.pdf</code> e <code>*_INTER_PARTNER_ASSISTANCE_RELACION_PAGOS_*.pdf</code></div>
+      </div>
+    </article>
+
+    <article class="win">
+      <header><h3>Nóminas y APU</h3><span class="pill p-ok">Generados</span></header>
+      <div class="body">
+        <div class="row"><span>RP · <span class="mono">640</span>+<span class="mono">642</span> a 30/06</span><span>501.931,79</span></div>
+        <div class="row"><span>PROIM · <span class="mono">640</span>+<span class="mono">642</span> a 31/07</span><span>844.368,50</span></div>
+        <div class="row"><span>APU de bancos</span><span>RP jul y ago · PROIM ago</span></div>
+        <div class="row"><span>Embargos vivos</span><span>RP 200,44 · PROIM 7.157,47</span></div>
+        <div class="gap warn">Falta el <b>APU de julio de PROIM</b> y los de septiembre de las dos. Uno de los ficheros lleva «REVISADO SARA»: hay revisión humana en el circuito que conviene reflejar en el proceso.</div>
+        <div class="src"><b>Origen</b><code>BANCOS/2026/5.APU CONTASOL/</code> y carpeta <code>PARA CLAUDE/</code></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow" style="margin-bottom:12px">Backlog · ordenado por lo que desbloquea, no por lo que cuesta</div>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Qué falta</th><th>Por qué importa</th><th>De dónde sale</th><th>Quién</th><th>Impacto</th></tr>
+      </thead>
+      <tbody>
+        <tr class="stripe s-crit"><td class="id">B-01</td><td>Re-ejecutar el cruce de julio de PROIM (4584 y 5218)</td><td>Puede cerrar 282 de los 283 pendientes de golpe. Nada que se decida después tiene sentido hasta saber cuántos faltan de verdad</td><td><span class="mono">/clasificar-comunicados-bancos</span></td><td>Contable</td><td class="imp">282 mov.</td></tr>
+        <tr class="stripe s-crit"><td class="id">B-02</td><td>Inventario de existencias a la fecha de corte</td><td>Sin él no hay resultado fiable en ninguna de las dos: las compras están íntegras en gasto</td><td>Recuento físico</td><td>Empresa</td><td class="imp">344.583,17</td></tr>
+        <tr class="stripe s-crit"><td class="id">B-03</td><td>Coeficientes de amortización por elemento</td><td>El grupo 68 está a cero en 2026. En RP la dotación probablemente convierte el beneficio en pérdida</td><td>Ficha de inmovilizado</td><td>Asesor</td><td class="imp">782.047,77</td></tr>
+        <tr class="stripe s-crit"><td class="id">B-04</td><td>Localizar el descuadre de 121,00 € del asiento de apertura de PROIM</td><td>Arrastra desde el 1 de enero y contamina todo el ejercicio</td><td>ContaSOL, asiento 1</td><td>Contable</td><td class="imp">121,00</td></tr>
+        <tr class="stripe s-crit"><td class="id">B-05</td><td>Extracto de julio de Sabadell 0595 y septiembre de 4 cuentas de PROIM</td><td>Sin extracto no se puede saber qué falta. Bloquea el cierre del trimestre</td><td><span class="mono">/descargar-bancos</span></td><td>Contable</td><td class="imp">5 extractos</td></tr>
+        <tr class="stripe s-warn"><td class="id">B-06</td><td>Clasificar los 17 traspasos: propios o contra RP CHARGER</td><td>Determina si hay obligación de documentar vinculadas y de presentar el modelo 232</td><td><span class="mono">/conciliar-banco-proim</span></td><td>Dirección</td><td class="imp">281.021,00</td></tr>
+        <tr class="stripe s-warn"><td class="id">B-07</td><td>Confirmar la diferencia de 102.853,80 € entre el diario y el balance de PROIM</td><td>Si no son asientos de agosto, hay seis cifras sin explicar</td><td>Diario actualizado</td><td>Contable</td><td class="imp">102.853,80</td></tr>
+        <tr class="stripe s-warn"><td class="id">B-08</td><td>Confirmar la naturaleza de los cobros de AXA e Inter Partner</td><td>Reparación para aseguradora no tiene prorrata; mediación sí. Cambia varios ejercicios</td><td>Contrato con la aseguradora</td><td>Dirección</td><td class="imp">—</td></tr>
+        <tr class="stripe s-warn"><td class="id">B-09</td><td>Cuadrar los 303, 111 y 115 presentados contra los saldos de <span class="mono">477</span>, <span class="mono">472</span> y <span class="mono">4751</span></td><td>Están presentados pero nadie ha comprobado que coincidan con la contabilidad</td><td>PDF de los modelos + balance</td><td>Contable</td><td class="imp">6 modelos</td></tr>
+        <tr class="stripe s-warn"><td class="id">B-10</td><td>Diario de RP a 31/07 o posterior</td><td>Su P&amp;G se queda en junio mientras PROIM llega a julio. No son comparables</td><td>ContaSOL</td><td>Contable</td><td class="imp">1 mes</td></tr>
+        <tr class="stripe s-warn"><td class="id">B-11</td><td>Abrir la cuenta <span class="mono">629</span> de PROIM y separar leasing de mantenimiento</td><td>Un arrendamiento financiero no va íntegro a gasto: se activa y solo el interés va a resultado</td><td>Mayor de la <span class="mono">629</span></td><td>Contable</td><td class="imp">70.881,33</td></tr>
+        <tr class="stripe s-warn"><td class="id">B-12</td><td>Abrir una <span class="mono">4751</span> propia en PROIM</td><td>Hoy las retenciones no tienen cuenta separada y el 111 no se puede cuadrar sin ir al detalle</td><td>Plan contable de PROIM</td><td>Contable</td><td class="imp">—</td></tr>
+        <tr class="stripe s-warn"><td class="id">B-13</td><td>Activar obra en curso en PROIM (grupo <span class="mono">33</span>)</td><td>Sin ella, marzo a mayo dan pérdidas falsas y julio un beneficio que no es todo de julio</td><td>Certificaciones y partes de obra</td><td>Asesor</td><td class="imp">7 meses</td></tr>
+        <tr class="stripe s-warn"><td class="id">B-14</td><td>Valorar a mercado el alquiler del local a los socios</td><td>Es una operación vinculada aunque la retención esté bien practicada</td><td>Contratos de C/ Fe 15</td><td>Asesor</td><td class="imp">425 × 2/mes</td></tr>
+        <tr class="stripe s-low"><td class="id">B-15</td><td>APU de julio de PROIM y de septiembre de las dos</td><td>Completa la importación a ContaSOL del trimestre</td><td><span class="mono">/generar-apu-nominas</span></td><td>Contable</td><td class="imp">3 APU</td></tr>
+        <tr class="stripe s-low"><td class="id">B-16</td><td>Vaciar <span class="mono">0 ENTRADA PENDIENTE</span> y revisar CUARENTENA y FALLIDAS</td><td>Cada documento varado ahí puede ser IVA deducible que no ha llegado a la contabilidad</td><td><span class="mono">/ejecutar-y-clasificar</span></td><td>Contable</td><td class="imp">—</td></tr>
+        <tr class="stripe s-low"><td class="id">B-17</td><td>Que las skills escriban su fichero de estado</td><td>Sin eso, este panel hay que montarlo a mano cada vez en lugar de salir solo</td><td>Las 7 skills</td><td>Claude</td><td class="imp">7 cambios</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="note">
+  <h3>Qué he mirado y qué no</h3>
+  <ul>
+    <li><b>Abierto por dentro:</b> el balance de sumas y saldos de RP (839 filas), el libro diario de PROIM (11.694 apuntes), los seis informes de pendientes de julio a septiembre y las carpetas de APU, otros documentos, cuadro de amortización y «PARA CLAUDE».</li>
+    <li><b>Localizado pero no abierto:</b> los PDF de los modelos 303, 111 y 115 — sé que existen y que se pagaron, no qué casillas llevan dentro. Tampoco el diario de RP a 31/07 ni los libros diarios de 2025.</li>
+    <li><b>No cubierto:</b> las facturas una a una. Las carpetas de FACTURAS de ambas sociedades tienen cientos de PDF; revisarlas exige otra pasada distinta de esta.</li>
+    <li><b>Dos nombres que engañan, y por eso no me fié de ellos:</b> <span class="mono">CUADRO_AMORTIZACION_PRESTAMO_5634.xlsx</span> es un cuadro de préstamo, no de inmovilizado; y <span class="mono">PROIM BALANCE SUMAS Y SALDOS A 30-06-2026.xls</span> es en realidad un balance de situación, sin desglose de gastos ni ingresos.</li>
+  </ul>
+</div>
+
+<footer>
+  Cifras tomadas directamente del balance de sumas y saldos y del libro diario. Lo estimado va marcado como tal.
+  Los importes no son un resultado de cierre: faltan los ajustes B-02 y B-03. La declaración la revisa y firma el asesor fiscal.
+</footer>
+
+</div>
